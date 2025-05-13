@@ -13,3 +13,5 @@ Route::get('/hello', function () {
 });
 
 Route::post('/create',[OrderController::class,'create']);
+Route::get('/calculate/{id}',[OrderController::class,'calculateTotal']);
+Route::get('/find/{id}',[OrderController::class,'find']);

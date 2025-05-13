@@ -16,5 +16,10 @@ class PizzaSeeder extends Seeder
         $pizza->name = 'Margarita';
         $pizza->price = 10.00;
         $pizza->save();
+
+        $pizza = new Pizza();
+        $pizza->name = 'Funghi';
+        $pizza->price = 12.50;
+        $pizza->save();
     }
 }

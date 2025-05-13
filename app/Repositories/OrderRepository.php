@@ -9,4 +9,12 @@ class OrderRepository{
         $order->save();
         return $order;
     }
+
+    public function find($id){
+        return Order::find($id);
+    }
+    
+    public function findWithDelivery($id){
+        return Order::with('delivery')->find($id);
+    }
 }

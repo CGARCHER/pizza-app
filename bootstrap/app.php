@@ -1,5 +1,8 @@
 <?php
 
+use App\Exceptions\NotFoundDeliveryException;
+use App\Exceptions\NotFoundOrderException;
+use App\Helpers\ApiResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,9 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        /*
-		 $exceptions->render(function (BookNotFoundException $exception){
-            return ApiResponse::error('',$exception->getMessage(), $exception->getCode());
+		$exceptions->render(function (NotFoundDeliveryException $ex){
+            return ApiResponse::error($ex->getCode(),$ex->getMessage(), $ex->getCode());
+        })
+        ->render(function (NotFoundOrderException $ex){
+            return ApiResponse::error($ex->getCode(),$ex->getMessage(), $ex->getCode());
         });
-		*/
     })->create();

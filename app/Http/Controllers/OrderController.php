@@ -20,8 +20,17 @@ class OrderController extends Controller
         $params = $create_order_request->all();
         $order = $this->orderService->create($params);
         return ApiResponse::success($order, "Order created");
+    }
 
+    public function calculateTotal($id){
 
+        $total = $this->orderService->calculateTotal($id);
+        return ApiResponse::success($total, "Successfully");
 
+    }
+
+    public function find($id){
+        $order = $this->orderService->find($id);
+        return ApiResponse::success($order, "Successfully");
     }
 }

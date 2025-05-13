@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->enum('status', StatusEnum::values());
             $table->date('order_date');
-            $table->string('pizzas_ids');
+            $table->string('pizza_ids');
             $table->foreignId('delivery_id')->constrained();
             $table->timestamps();
         });
