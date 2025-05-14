@@ -2,6 +2,7 @@
 
 use App\Exceptions\NotFoundDeliveryException;
 use App\Exceptions\NotFoundOrderException;
+use App\Exceptions\StatusErrorOrderException;
 use App\Helpers\ApiResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -22,6 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
             return ApiResponse::error($ex->getCode(),$ex->getMessage(), $ex->getCode());
         })
         ->render(function (NotFoundOrderException $ex){
+            return ApiResponse::error($ex->getCode(),$ex->getMessage(), $ex->getCode());
+        })
+        ->render(function (StatusErrorOrderException $ex){
             return ApiResponse::error($ex->getCode(),$ex->getMessage(), $ex->getCode());
         });
     })->create();

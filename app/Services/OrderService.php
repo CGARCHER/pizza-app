@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Enums\StatusEnum;
 use App\Exceptions\NotFoundDeliveryException;
 use App\Exceptions\NotFoundOrderException;
+use App\Exceptions\StatusErrorOrderException;
 use App\Models\Delivery;
 use App\Models\Order;
 use App\Repositories\DeliveryRepository;
@@ -66,5 +67,27 @@ class OrderService{
             throw new NotFoundOrderException("No existe order con id {$id}", 404);
         }
         return $order;
+    }
+
+    public function update($params){
+        $id = $params['order_id'];
+        $new_status = $params['new_status'];
+
+        //Comprobar que exista el ID del pedido.
+        $order = $this->orderRepository->find($id);
+        if(empty($order)){
+            throw new NotFoundOrderException("No existe pedido con id {$id}", 404);
+        }
+
+        //Comprobar que el estado del pedido sea diferente de IN_PREPARATION y DELIVERED
+        if($order->status == StatusEnum::IN_PREPARATION || 
+            $order->status == StatusEnum::DELIVERED){
+                throw new StatusErrorOrderException("El pedido {$order->id} su estado es {$order->status->value}", 412);
+        }
+
+        //Tras las comprobaciones, modifico el order
+        $order->status = StatusEnum::from($new_status);
+        return $this->orderRepository->save($order);
+
     }
 }

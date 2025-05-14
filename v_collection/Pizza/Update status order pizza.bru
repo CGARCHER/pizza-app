@@ -1,0 +1,18 @@
+meta {
+  name: Update status order pizza
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8000/api/update
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "order_id":1,
+    "new_statatus":"CANCELLED"
+  }
+}
